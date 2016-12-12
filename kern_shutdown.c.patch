@@ -1,0 +1,13 @@
+Permits a PC system without a graphics board to let us know it can be powered
+off by beeping.
+
+--- ../../../sys/kern/kern_shutdown.c.orig	Fri May 26 13:14:35 2006
++++ ../../../sys/kern/kern_shutdown.c	Fri May 26 13:33:14 2006
+@@ -332,6 +332,7 @@
+ 		printf("\n");
+ 		printf("The operating system has halted.\n");
+ 		printf("Please press any key to reboot.\n\n");
++		outb(0x61,inb(0x61)|3);
+ 		switch (cngetc()) {
+ 		case -1:		/* No console, just die */
+ 			cpu_halt();
